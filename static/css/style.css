@@ -1,0 +1,56 @@
+.main-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    vertical-align: central;
+
+}
+
+#header {
+    margin-top: 8px;
+    margin-left: 100px;
+}
+
+#new_board {
+    margin-top: 8px;
+    margin-right: 100px;
+}
+
+.jumbotron {
+    margin: 10px auto;
+    padding: 10px;
+    padding-top: 15px;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border: #9C1A1C 1px solid;
+}
+
+.board-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.card, .add_columns {
+    margin: 10px 20px;
+}
+
+.card {
+    border: blueviolet 1px dashed;
+    padding: 15px;
+    text-align: center;
+}
+
+.column {
+    margin: 15px;
+    max-width: 400px;
+    height: auto;
+    overflow: hidden;
+}
