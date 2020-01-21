@@ -12,29 +12,23 @@
         <h1 id="header">Pro Man</h1>
         <button id="new_board" type="button" class="btn btn-primary">+ New Board</button>
     </header>
-    {{ boards }}
-    <div class="container board">
-        <div>
-            <h2 class="board-title">Title1</h2>
-        </div>
-        <div class="board-content">
-            <div class="column">
-                <div class="card">
-                    Something
-                </div>
-                <div class="card">
-                    Something
-                </div>
+    {% for board in boards_data %}
+        <div class="container board">
+            <div>
+                <h2 id="board{{ board.id }}" class="board-title">{{ board.title }}</h2>
             </div>
-            <div class="column">
-                <div class="card">
-                    Something new here
-                </div>
-                <div class="card">
-                    Something
-                </div>
+            <div class="board-content">
+                {% for column in board['columns_data'] %}
+                    <div class="column">
+                        {% for card in column['cards'] %}
+                            <div id="card{{ card.id }}" class="card">
+                                {{ card.title }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <button type="button" class="btn btn-light add_columns">Add column</button>
             </div>
-            <button type="button" class="btn btn-light add_columns">Add column</button>
         </div>
-    </div>
+    {% endfor %}
 {% endblock %}
