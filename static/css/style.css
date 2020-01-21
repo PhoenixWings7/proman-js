@@ -39,6 +39,10 @@
     justify-content: flex-start;
 }
 
+.board-title {
+    margin: 10px;
+}
+
 .card, .add_columns {
     margin: 10px 20px;
 }
