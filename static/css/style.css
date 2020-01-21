@@ -28,7 +28,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    border: #9C1A1C 1px solid;
+    border: blueviolet 1px solid;
+    border-radius: 20px;
 }
 
 .board-content {
