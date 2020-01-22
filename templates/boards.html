@@ -14,7 +14,8 @@
     </header>
     {% for board in boards_data %}
         <div class="container board">
-            <div>
+            <div class="header">
+                <input type="text" class="input-field">
                 <h2 id="board{{ board.id }}" class="board-title">{{ board.title }}</h2>
             </div>
             <div class="board-content">
