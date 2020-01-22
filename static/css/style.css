@@ -38,7 +38,7 @@
     padding-left: 0;
 }
 
-.board-content {
+.board-content, .columns {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
