@@ -1,10 +1,7 @@
-const header = document.querySelectorAll('.header');
-
-
-header.forEach(element => {
-    element.addEventListener('click', changeBoardName)
-});
-
+function setEventListenerOnEachBoard() {
+    const allBoardsDiv = document.getElementById('allboards');
+    allBoardsDiv.addEventListener('click', changeBoardName);
+}
 
 function changeBoardName(e) {
     if (e.target.tagName === 'H2') {
@@ -14,7 +11,7 @@ function changeBoardName(e) {
         header.style.display = 'none';
         inputField.value = boardName;
         inputField.style.display = 'block';
-       inputField.addEventListener('keypress', function (e) {
+        inputField.addEventListener('keypress', function (e) {
             if (e.code === 'Enter') {
                 header.textContent = this.value;
                 header.style.display = 'block';
@@ -40,7 +37,7 @@ function activateButtons() {
 function addNewBoard() {
     //get board template and body from DOM
     let boardTemplate = document.getElementsByTagName('template')[0];
-    let DOMbody = document.getElementsByTagName('body')[0];
+    let allBoards = document.getElementById('allboards');
 
     //create new board DOM element with classes 'container' and 'board' and template HTML code in it
     let newBoard = document.createElement('div');
@@ -51,7 +48,8 @@ function addNewBoard() {
     newBoard.innerHTML = newBoardHTML;
 
     //add new board element to the body
-    DOMbody.appendChild(newBoard)
+    allBoards.appendChild(newBoard)
 }
 
 activateButtons();
+setEventListenerOnEachBoard();
