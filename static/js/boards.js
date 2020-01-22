@@ -23,15 +23,17 @@ function changeBoardName(e) {
     }
 }
 function changeBoardView(boardElem) {
-    boardElem.getElementsByClassName('board-content')
+    boardElem.getElementsByClassName('columns')
 }
 
 function activateButtons() {
     //get buttons
-    let newBoardBtn = document.getElementById('new_board')
+    let newBoardBtn = document.getElementById('new_board');
+    let allBoardsDiv = document.getElementById('allboards');
 
     //add event listeners
-    newBoardBtn.addEventListener('click', addNewBoard)
+    newBoardBtn.addEventListener('click', addNewBoard);
+    allBoardsDiv.addEventListener('click', addNewColumn);
 }
 
 function addNewBoard() {
@@ -49,6 +51,22 @@ function addNewBoard() {
 
     //add new board element to the body
     allBoards.appendChild(newBoard)
+}
+
+function addNewColumn(event) {
+    if (event.target.tagName === 'BUTTON') {
+        //get columns div which is before 'Add column' button
+        let columns = event.target.parentElement.parentElement.firstElementChild;
+        //create new div for this column
+        let newColumn = document.createElement('div');
+        newColumn.classList.add('column');
+        // get template HTML and set it to newColumn HTML
+        let columnTemplate = document.getElementById('column_template');
+        newColumn.innerHTML = columnTemplate.innerHTML;
+        //add new column to the columns div
+        columns.appendChild(newColumn);
+
+    }
 }
 
 activateButtons();
