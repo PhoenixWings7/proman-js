@@ -14,7 +14,7 @@
     </header>
     {% for board in boards_data %}
         <div class="container board">
-            <div class="header">
+            <div class="board-title-div header">
                 <input type="text" class="input-field">
                 <h2 id="board{{ board.id }}" class="board-title">{{ board.title }}</h2>
             </div>
@@ -37,4 +37,5 @@
             </div>
         </div>
     {% endfor %}
+{% include 'board_template.html' %}
 {% endblock %}

@@ -28,8 +28,14 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    margin-bottom: 20px;
     border: blueviolet 1px solid;
     border-radius: 20px;
+}
+
+.container {
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .board-content {
@@ -41,6 +47,13 @@
 
 .board-title {
     margin: 10px;
+}
+
+.board-title-div {
+    width: 100%;
+    background-color: rgba(158, 46, 255, 0.51);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .card, .add_columns {
