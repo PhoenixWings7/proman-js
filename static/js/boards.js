@@ -1,27 +1,64 @@
 function setEventListenerOnEachBoard() {
     const allBoardsDiv = document.getElementById('allboards');
-    allBoardsDiv.addEventListener('click', changeBoardName);
+    allBoardsDiv.addEventListener('click', chooseEvent);
 }
 
-function changeBoardName(e) {
-    if (e.target.tagName === 'H2') {
-        const header = e.target;
-        let boardName = header.textContent;
-        const inputField = e.target.parentElement.firstElementChild;
-        header.style.display = 'none';
-        inputField.value = boardName;
-        inputField.style.display = 'block';
-        inputField.addEventListener('keypress', function (e) {
-            if (e.code === 'Enter') {
-                header.textContent = this.value;
-                header.style.display = 'block';
-                inputField.style.display= 'none';
-                console.log(header.textContent);
+function chooseEvent(e) {
+    if (e.target.tagName === 'H2' ) {
+        // change the title of the board
+        let element = 'board';
+        let classToBeSearched = 'board-input';
+        changeBoardName(e, element, classToBeSearched);
+    } else if(e.target.tagName === 'H4') {
+        // change the title of the column
 
-            }
-       });
     }
 }
+
+function setInputEventListeners(inputField, contentToBeChanged, previousName) {
+    inputField.addEventListener('keypress', function (e) {
+        if (e.code === 'Enter') {
+             this.value.trim() !== '' ? contentToBeChanged.textContent = this.value : contentToBeChanged.textContent = previousName;
+            contentToBeChanged.style.display = 'block';
+            inputField.style.display= 'none';
+        }
+    });
+    inputField.addEventListener('blur', function() {
+        this.value.trim() !== '' ? contentToBeChanged.textContent = this.value : contentToBeChanged.textContent = previousName;
+        contentToBeChanged.style.display = 'block';
+        inputField.style.display= 'none';
+    });
+}
+
+function getInputAndFocus(e, element, classToBeSearched){
+    console.log(element, classToBeSearched);
+        const selectedElement = e.target;
+        let previousContent = selectedElement.textContent;
+
+        // get the input field using selected element
+        const inputField = e.target.parentElement.firstElementChild;
+        const nextID = getNextBoardID(element, classToBeSearched);
+
+        inputField.setAttribute('id', `${nextID}`);
+        inputField.value = previousContent;
+        // console.log(inputField);
+        selectedElement.style.display = 'none';
+        inputField.style.display = 'block';
+        document.getElementById(`${nextID}`).focus();
+        return {inputField: inputField, selectedElement: selectedElement, previousContent: previousContent}
+}
+
+function changeBoardName(e, element, classToBeSearched){
+    // take action only if the element is a h2 tag in the title
+        const elementHolder = getInputAndFocus(e, element, classToBeSearched);
+        // get each of the element from the element holder object
+        const inputField = elementHolder.inputField;
+        const boardTitle = elementHolder.previousContent;
+        const boardHeader = elementHolder.selectedElement;
+
+        setInputEventListeners(inputField, boardHeader, boardTitle);
+}
+
 function changeBoardView(boardElem) {
     boardElem.getElementsByClassName('columns')
 }
@@ -69,5 +106,20 @@ function addNewColumn(event) {
     }
 }
 
+function getNextBoardID (element, classToBeSearched){
+     // create the id for the input field, needed to put focus on input field
+    const inputFields = document.querySelectorAll(`.${classToBeSearched}`);
+    if (inputFields.length) {
+        const number = (Array.from(inputFields) //make an array
+            .map(element => element.id.split('-')) // get the id class and split using the dash
+            .map(element => parseInt(element[element.length - 1])) //get the number part and convert to a number
+            .sort((a, b) => b - a)[0]) + 1; //sort the array descending, highest number first and return it
+        return `${element}-${number}`
+    } else {
+        return `${element}-1`;
+    }
+}
+
 activateButtons();
 setEventListenerOnEachBoard();
+
