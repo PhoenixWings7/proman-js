@@ -3,12 +3,16 @@ function setEventListenerOnEachBoard() {
     allBoardsDiv.addEventListener('click', chooseEvent);
 }
 
+function makeBoardInputFieldID(e) {
+    let boardID = e.target.parentElement.parentElement.parentElement.id;
+    // make an id for the input field
+    return boardID.replace('board', 'board-title');
+}
 function chooseEvent(e) {
     if (e.target.tagName === 'H2' ) {
-        // change the title of the board
-        let element = 'board';
-        let classToBeSearched = 'board-input';
-        changeBoardName(e, element, classToBeSearched);
+        const inputFieldID =makeBoardInputFieldID(e);
+
+        changeBoardName(e, inputFieldID);
     } else if(e.target.tagName === 'H4') {
         // change the title of the column
         let element = 'column';
@@ -16,7 +20,7 @@ function chooseEvent(e) {
         changeBoardName(e, element, classToBeSearched);
     }
      else if ((e.target.className).includes('expand')){
-        console.log('it s me');
+         // hide or show the board content when the button is clicked
         const boardContent = e.target.parentElement.parentElement.nextElementSibling;
         boardContent.classList.toggle('hide');
 
@@ -43,34 +47,28 @@ function setInputEventListeners(inputField, contentToBeChanged, previousName) {
     });
 }
 
-function getInputAndFocus(e, element, classToBeSearched){
+function getInputAndFocus(e, inputFieldID){
         const selectedElement = e.target;
         let previousContent = selectedElement.textContent;
 
         // get the input field using selected element
-        const inputField = e.target.parentElement.firstElementChild;
-        // console.log(inputField);
-        /*
-        let nextID
-        if (inputField.id) {
-            nextID = inputField.id
-        }else nextID = getNextBoardID(element, classToBeSearched);
-        */
-        const nextID = getNextBoardID(element, classToBeSearched);
-        // console.log(nextID);
+        const inputField = e.target.parentElement.parentElement.firstElementChild;
+        console.log(inputField);
+        inputField.setAttribute('id', `${inputFieldID}`);
 
-        inputField.setAttribute('id', `${nextID}`);
+        // set the inputField to the current title of the element we want to change
         inputField.value = previousContent;
         // console.log(inputField);
         selectedElement.style.display = 'none';
         inputField.style.display = 'block';
-        document.getElementById(`${nextID}`).focus();
+        document.getElementById(`${inputFieldID}`).focus();
+        console.log(inputFieldID)
         return {inputField: inputField, selectedElement: selectedElement, previousContent: previousContent}
 }
 
-function changeBoardName(e, element, classToBeSearched){
+function changeBoardName(e, inputFieldID){
     // take action only if the element is a h2 tag in the title
-        const elementHolder = getInputAndFocus(e, element, classToBeSearched);
+        const elementHolder = getInputAndFocus(e, inputFieldID);
         // get each of the element from the element holder object
         const inputField = elementHolder.inputField;
         const boardTitle = elementHolder.previousContent;
