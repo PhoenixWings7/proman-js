@@ -26,7 +26,7 @@ def get_columns(cursor, board_id):
 
 @connection_handler.db_connection
 def get_cards(cursor, column_id):
-    statement_str = '''SELECT title, card_order, column_id FROM cards 
+    statement_str = '''SELECT id, title, card_order, column_id FROM cards 
                         WHERE column_id=%(column_id)s
                         ORDER BY card_order'''
     cursor.execute(statement_str, {'column_id': column_id})

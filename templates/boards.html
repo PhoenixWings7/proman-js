@@ -12,23 +12,23 @@
         <h1 id="header">Pro Man</h1>
         <button id="new_board" type="button" class="btn btn-primary">+ New Board</button>
     </header>
-    {% for board in boards_data %}
     <div id="allboards">
-        <div class="container board">
+    {% for board in boards_data %}
+        <div id="board-{{ board.id }}" class="container board">
             <div class="board-title-div header">
                 <input type="text" class="input-field">
-                <h2 id="board{{ board.id }}" class="board-title">{{ board.title }}</h2>
+                <h2 class="board-title">{{ board.title }}</h2>
             </div>
             <div class="board-content">
                 <div class="columns">
                     {% for column in board['columns_data'] %}
-                        <div class="column">
+                        <div id="column-{{ column.id }}" class="column">
                             <div class="column-title">
                                 <h4>{{ column.title }}</h4>
                             </div>
                             <div class="column-content">
                                 {% for card in column['cards'] %}
-                                    <div id="card{{ card.id }}" class="card">
+                                    <div id="card-{{ card.id }}" class="card">
                                         {{ card.title }}
                                     </div>
                                 {% endfor %}
@@ -41,8 +41,8 @@
                 </div>
             </div>
         </div>
-    </div>
     {% endfor %}
+    </div>
 {% include 'board_template.html' %}
 {% include 'column_template.html' %}
 {% endblock %}
