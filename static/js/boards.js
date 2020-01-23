@@ -31,7 +31,6 @@ function setInputEventListeners(inputField, contentToBeChanged, previousName) {
 }
 
 function getInputAndFocus(e, element, classToBeSearched){
-    console.log(element, classToBeSearched);
         const selectedElement = e.target;
         let previousContent = selectedElement.textContent;
 
@@ -190,9 +189,6 @@ function updateElemSessionStorage(elementKey, elementValue) {
 function setTemplateBoardsStorageOnLoad () {
     let boards = document.querySelectorAll('.board');
     //clear session storage
-    if (sessionStorage) {
-        sessionStorage.clear();
-    }
     window.addEventListener('load', setBoardSessionStorage.bind(null, boards));
 }
 
