@@ -82,12 +82,22 @@ function addNewBoard() {
     let newBoard = document.createElement('div');
     let newBoardHTML = boardTemplate.cloneNode(true).innerHTML;
 
+    newBoard.id = 'newBoard-' + getNewBoardID();
     newBoard.classList.add('container');
     newBoard.classList.add('board');
     newBoard.innerHTML = newBoardHTML;
+    //set id for new column and card
+    newBoardCol = newBoard.querySelector('.column');
+    newBoardCol.id = 'column-' + getNewColumnID();
+    newBoardCard = newBoard.querySelector('.card');
+    newBoardCard.id = 'card-' + getNewCardID();
 
     //add new board element to the body
-    allBoards.appendChild(newBoard)
+    allBoards.appendChild(newBoard);
+
+    //update session storage for this board
+    let newBoardArray =[newBoard];
+    setBoardSessionStorage(newBoardArray)
 }
 
 function addNewColumn(event) {
@@ -129,11 +139,24 @@ let getNewBoardID = (function () {
     }
 })();
 
+let getNewColumnID = (function () {
+    let newColID = 0;
+    return function () {
+        newColID++;
+        return `${newColID}`
+    }
+})();
+
+let getNewCardID = (function () {
+    let newColID = 0;
+    return function () {
+        newColID++;
+        return `${newColID}`
+    }
+})();
+
 //sets session storage for array of boards
 function setBoardSessionStorage(boards) {
-    if (sessionStorage) {
-        sessionStorage.clear();
-    }
     for (board of boards) {
         //set board session storage
         let boardID = board.id;
@@ -160,12 +183,16 @@ function setBoardSessionStorage(boards) {
 
 }
 
-function updateSessionStorage() {
-
+function updateElemSessionStorage(elementKey, elementValue) {
+    sessionStorage.setItem(elementKey, elementValue)
 }
 
 function setTemplateBoardsStorageOnLoad () {
     let boards = document.querySelectorAll('.board');
+    //clear session storage
+    if (sessionStorage) {
+        sessionStorage.clear();
+    }
     window.addEventListener('load', setBoardSessionStorage.bind(null, boards));
 }
 
