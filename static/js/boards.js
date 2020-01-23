@@ -120,6 +120,56 @@ function getNextBoardID (element, classToBeSearched){
     }
 }
 
+//set private id number for getNewBoard function by using closures and invoking the function immediately
+let getNewBoardID = (function () {
+    let newBoardID = 0;
+    return function (){
+        newBoardID++;
+        return `${newBoardID}`;
+    }
+})();
+
+//sets session storage for array of boards
+function setBoardSessionStorage(boards) {
+    if (sessionStorage) {
+        sessionStorage.clear();
+    }
+    for (board of boards) {
+        //set board session storage
+        let boardID = board.id;
+        let boardTitle = board.querySelector('.board-title').textContent;
+        sessionStorage.setItem(`${boardID}`, boardTitle);
+
+        let boardColumns = board.querySelectorAll('.column');
+        for (column of boardColumns) {
+            //set columns session storage
+            let columnID = column.id;
+            let columnTitle = column.querySelector('.column-title').textContent;
+            sessionStorage.setItem(`${boardID}-${columnID}`, columnTitle);
+            //set session storage for cards in this column
+            let cards = column.querySelectorAll('.card');
+            for (card of cards) {
+                let cardID = card.id;
+                let cardContent = card.textContent;
+                sessionStorage.setItem(`${boardID}-${columnID}-${cardID}`, cardContent)
+            }
+        }
+
+
+    }
+
+}
+
+function updateSessionStorage() {
+
+}
+
+function setTemplateBoardsStorageOnLoad () {
+    let boards = document.querySelectorAll('.board');
+    window.addEventListener('load', setBoardSessionStorage.bind(null, boards));
+}
+
 activateButtons();
 setEventListenerOnEachBoard();
+setTemplateBoardsStorageOnLoad();
 
