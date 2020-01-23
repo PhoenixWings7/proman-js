@@ -96,7 +96,10 @@ function addNewBoard() {
 
     //update session storage for this board
     let newBoardArray =[newBoard];
-    setBoardSessionStorage(newBoardArray)
+    setBoardSessionStorage(newBoardArray);
+    //activate changing session for new board
+    let inputFields = newBoard.getElementsByClassName('input-field');
+    activateStorageUpdate(inputFields);
 }
 
 function addNewColumn(event) {
@@ -182,6 +185,17 @@ function setBoardSessionStorage(boards) {
 
 }
 
+function updateStorageOnChange(element) {
+    let elementKey;
+    let elementValue = element.textContent;
+    console.log(element);
+        if (element.classList.contains('input-title')) {
+            elementKey = element.parentElement.parentElement.id;
+            elementValue = element.value;
+    }
+    updateElemSessionStorage(elementKey, elementValue);
+}
+
 function updateElemSessionStorage(elementKey, elementValue) {
     sessionStorage.setItem(elementKey, elementValue)
 }
@@ -192,7 +206,19 @@ function setTemplateBoardsStorageOnLoad () {
     window.addEventListener('load', setBoardSessionStorage.bind(null, boards));
 }
 
+function activateStorageUpdateForTemplateBoards() {
+    let boardTitles = document.querySelectorAll('.input-title');
+    activateStorageUpdate(boardTitles);
+}
+
+function activateStorageUpdate(titleInputArray) {
+    for (boardInput of titleInputArray) {
+        boardInput.addEventListener('change', updateStorageOnChange.bind(null, boardInput));
+    }
+}
+
 activateButtons();
 setEventListenerOnEachBoard();
 setTemplateBoardsStorageOnLoad();
+activateStorageUpdateForTemplateBoards();
 
