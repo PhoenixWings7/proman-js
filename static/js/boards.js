@@ -68,11 +68,11 @@ function activateButtons() {
     let allBoardsDiv = document.getElementById('allboards');
 
     //add event listeners
-    newBoardBtn.addEventListener('click', addNewBoard);
+    newBoardBtn.addEventListener('click', addNewBoard.bind(null, null, null));
     allBoardsDiv.addEventListener('click', addNewColumn);
 }
 
-function addNewBoard() {
+function addNewBoard(newBoardID='', newBoardTitle) {
     //get board template and body from DOM
     let boardTemplate = document.getElementsByTagName('template')[0];
     let allBoards = document.getElementById('allboards');
@@ -81,7 +81,14 @@ function addNewBoard() {
     let newBoard = document.createElement('div');
     let newBoardHTML = boardTemplate.cloneNode(true).innerHTML;
 
-    newBoard.id = 'newBoard-' + getNewBoardID();
+    if (! newBoardID) {
+        //create id if no id passed
+        newBoard.id = 'newBoard-' + getNewBoardID();
+    }
+    else {
+        //set board's specific id
+        newBoard.id = newBoardID;
+    }
     newBoard.classList.add('container');
     newBoard.classList.add('board');
     newBoard.innerHTML = newBoardHTML;
@@ -90,6 +97,11 @@ function addNewBoard() {
     newBoardCol.id = 'column-' + getNewColumnID();
     newBoardCard = newBoard.querySelector('.card');
     newBoardCard.id = 'card-' + getNewCardID();
+
+    //set new title if it is passed
+    if (newBoardTitle) {
+        newBoard.getElementsByClassName('board-title')[0].textContent = newBoardTitle;
+    }
 
     //add new board element to the body
     allBoards.appendChild(newBoard);
@@ -217,8 +229,21 @@ function activateStorageUpdate(titleInputArray) {
     }
 }
 
+function uploadNewBoardsFromStorage() {
+    let storageKeys = Object.keys(sessionStorage);
+    for (key of storageKeys) {
+        if ((key.includes('newBoard')) && (key.split('-').length <= 2)) {
+            let newBoardID = key;
+            let newBoardTitle = sessionStorage.getItem(key);
+            addNewBoard(newBoardID, newBoardTitle);
+        }
+    }
+}
+
 activateButtons();
 setEventListenerOnEachBoard();
 setTemplateBoardsStorageOnLoad();
 activateStorageUpdateForTemplateBoards();
+window.addEventListener('load', uploadNewBoardsFromStorage);
 
+//BUG! NEW BOARD GETS ID=1 AFTER RELOAD SO IT OVERWRITES THE FIRST NEWBOARD AND SO ON
