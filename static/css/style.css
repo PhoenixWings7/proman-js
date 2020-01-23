@@ -82,3 +82,23 @@
 .column-input {
     display: none;
 }
+.content-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+.expand {
+    margin-right: 20px;
+}
+.hide {
+    display: none;
+}
+.expand-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+}
+.button {
+    margin: 10px 20px;
+}

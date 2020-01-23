@@ -14,8 +14,18 @@ function chooseEvent(e) {
         let element = 'column';
         let classToBeSearched = 'column-input';
         changeBoardName(e, element, classToBeSearched);
+    }
+     else if ((e.target.className).includes('expand')){
+        console.log('it s me');
+        const boardContent = e.target.parentElement.parentElement.nextElementSibling;
+        boardContent.classList.toggle('hide');
+
+        // entireBoard.classList.toggle('hide');
+
 
     }
+
+
 }
 
 function setInputEventListeners(inputField, contentToBeChanged, previousName) {
@@ -39,9 +49,15 @@ function getInputAndFocus(e, element, classToBeSearched){
 
         // get the input field using selected element
         const inputField = e.target.parentElement.firstElementChild;
-        console.log(inputField);
+        // console.log(inputField);
+        /*
+        let nextID
+        if (inputField.id) {
+            nextID = inputField.id
+        }else nextID = getNextBoardID(element, classToBeSearched);
+        */
         const nextID = getNextBoardID(element, classToBeSearched);
-        console.log(nextID);
+        // console.log(nextID);
 
         inputField.setAttribute('id', `${nextID}`);
         inputField.value = previousContent;
@@ -83,6 +99,8 @@ function addNewBoard() {
     let allBoards = document.getElementById('allboards');
 
     //create new board DOM element with classes 'container' and 'board' and template HTML code in it
+    let wrapperDiv = document.createElement('div');
+    wrapperDiv.classList.add('content-wrapper');
     let newBoard = document.createElement('div');
     let newBoardHTML = boardTemplate.cloneNode(true).innerHTML;
 
@@ -90,12 +108,13 @@ function addNewBoard() {
     newBoard.classList.add('board');
     newBoard.innerHTML = newBoardHTML;
 
+    wrapperDiv.append(newBoard);
     //add new board element to the body
-    allBoards.appendChild(newBoard)
+    allBoards.appendChild(wrapperDiv);
 }
 
 function addNewColumn(event) {
-    if (event.target.tagName === 'BUTTON') {
+    if (event.target.tagName === 'BUTTON' && !(event.target.className).includes('expand')) {
         //get columns div which is before 'Add column' button
         let columns = event.target.parentElement.parentElement.firstElementChild;
         //create new div for this column
