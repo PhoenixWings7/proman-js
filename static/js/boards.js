@@ -10,14 +10,13 @@ function makeBoardInputFieldID(e) {
 }
 function chooseEvent(e) {
     if (e.target.tagName === 'H2' ) {
-        const inputFieldID =makeBoardInputFieldID(e);
-
-        changeBoardName(e, inputFieldID);
+        const inputID = makeBoardInputFieldID(e);
+        changeBoardName(e, inputID);
     } else if(e.target.tagName === 'H4') {
         // change the title of the column
         let element = 'column';
         let classToBeSearched = 'column-input';
-        changeBoardName(e, element, classToBeSearched);
+        // changeBoardName(e, inputID);
     }
      else if ((e.target.className).includes('expand')){
          // hide or show the board content when the button is clicked
@@ -25,11 +24,7 @@ function chooseEvent(e) {
         boardContent.classList.toggle('hide');
 
         // entireBoard.classList.toggle('hide');
-
-
     }
-
-
 }
 
 function setInputEventListeners(inputField, contentToBeChanged, previousName) {
@@ -97,8 +92,6 @@ function addNewBoard() {
     let allBoards = document.getElementById('allboards');
 
     //create new board DOM element with classes 'container' and 'board' and template HTML code in it
-    let wrapperDiv = document.createElement('div');
-    wrapperDiv.classList.add('content-wrapper');
     let newBoard = document.createElement('div');
     let newBoardHTML = boardTemplate.cloneNode(true).innerHTML;
 
@@ -106,9 +99,8 @@ function addNewBoard() {
     newBoard.classList.add('board');
     newBoard.innerHTML = newBoardHTML;
 
-    wrapperDiv.append(newBoard);
     //add new board element to the body
-    allBoards.appendChild(wrapperDiv);
+    allBoards.appendChild(newBoard);
 }
 
 function addNewColumn(event) {

@@ -15,39 +15,42 @@
     {% for board in boards_data %}
     <div id="allboards">
         <div class="content-wrapper">
-        <div class="container board" id="board-{{ board.id }}">
-            <div class="board-title-div header">
-                <input type="text" class="board-input" >
-                <div class="expand-button">
+            <div class="container board" id="board-{{ board.id }}">
+                <div class="board-title-div header">
+                    <input type="text" class="board-input" >
+                    <!-- <div class="expand-button"> -->
                     <h2  class="board-title">{{ board.title }}</h2>
-                    <button class="btn btn-primary button expand">Expand</button>
+                    <!-- </div> -->
+                </div>
+                <div class="board-content">
+                    <div class="columns">
+                        {% for column in board['columns_data'] %}
+                            <div class="column" id="column-{{ column.id }}">
+                                <div class="column-title">
+                                    <input type="text" class="column-input" id="column-1">
+                                    <h4>{{ column.title }}</h4>
+                                </div>
+                                <div class="column-content">
+                                    {% for card in column['cards'] %}
+                                        <div id="card{{ card.id }}" class="card">
+                                            {{ card.title }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-light add_columns">Add column</button>
+                    </div>
                 </div>
             </div>
-            <div class="board-content">
-                <div class="columns">
-                    {% for column in board['columns_data'] %}
-                        <div class="column" id="column-{{ column.id }}">
-                            <div class="column-title">
-                                <input type="text" class="column-input" id="column-1">
-                                <h4>{{ column.title }}</h4>
-                            </div>
-                            <div class="column-content">
-                                {% for card in column['cards'] %}
-                                    <div id="card{{ card.id }}" class="card">
-                                        {{ card.title }}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div>
-                    <button type="button" class="btn btn-light add_columns">Add column</button>
-                </div>
+            <div class="expand">
+                <button class="btn btn-primary button expand">Expand</button>
             </div>
-        </div>
     </div>
     {% endfor %}
 {% include 'board_template.html' %}
 {% include 'column_template.html' %}
+{% include 'template.html' %}
 {% endblock %}

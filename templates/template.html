@@ -1,0 +1,32 @@
+<template id="template">
+    <div class="content-wrapper">
+        <div class="container board" id="board-{{ board.id }}">
+            <div class="board-title-div header">
+                <input type="text" class="board-input">
+                <!-- <div class="expand-button"> -->
+                <h2 class="board-title">New Board</h2>
+                <!-- </div> -->
+            </div>
+            <div class="board-content">
+                <div class="columns">
+                    <div class="column">
+                        <div class="column-title">
+                            <input type="text" class="column-input" id="column-1">
+                            <h4>New Column/h4>
+                        </div>
+                        <div class="column-content">
+                            <div class="card">
+                                new card
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-light add_columns">Add column</button>
+                </div>
+            </div>
+        </div>
+        <div class="expand">
+            <button class="btn btn-primary button expand">Expand</button>
+        </div>
+</template>
