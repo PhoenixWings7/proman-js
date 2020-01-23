@@ -72,7 +72,13 @@
     height: auto;
     overflow: hidden;
 }
-.input-field {
+.board-input {
     margin: 10px;
+    display: none;
+}
+.board-input:focus, .title-input:focus {
+    border: solid red 1px;
+}
+.column-input {
     display: none;
 }

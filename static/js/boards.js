@@ -11,6 +11,9 @@ function chooseEvent(e) {
         changeBoardName(e, element, classToBeSearched);
     } else if(e.target.tagName === 'H4') {
         // change the title of the column
+        let element = 'column';
+        let classToBeSearched = 'column-input';
+        changeBoardName(e, element, classToBeSearched);
 
     }
 }
@@ -31,13 +34,14 @@ function setInputEventListeners(inputField, contentToBeChanged, previousName) {
 }
 
 function getInputAndFocus(e, element, classToBeSearched){
-    console.log(element, classToBeSearched);
         const selectedElement = e.target;
         let previousContent = selectedElement.textContent;
 
         // get the input field using selected element
         const inputField = e.target.parentElement.firstElementChild;
+        console.log(inputField);
         const nextID = getNextBoardID(element, classToBeSearched);
+        console.log(nextID);
 
         inputField.setAttribute('id', `${nextID}`);
         inputField.value = previousContent;
@@ -122,4 +126,3 @@ function getNextBoardID (element, classToBeSearched){
 
 activateButtons();
 setEventListenerOnEachBoard();
-
